@@ -80,6 +80,8 @@ def main():
     nt = None
     df = None
     movie_name = input('Enter a Movie Name: ')
+    numOfTweets = int(input("Number of Tweets in hundreds(1, 2, 3, 4): "))
+    numOfTweets = 3 if nomOfTweets >= 4 else nomOfTweets - 1
     query = f'-is:retweet lang:en ("{movie_name}" movie)'  # Set rules here
     data = process_yaml()
     bearer_token = create_bearer_token(data)
@@ -92,10 +94,11 @@ def main():
         tweets, nt = get_tweets(url, headers=headers)
         df = create_update_dataframe(tweets, df)
 
+
         if j >= 3:
             time.sleep(16*60)
             j = -1
-        if i >= 0 or (nt is None):
+        if i >= numOfTweets or (nt is None):
             break
         i += 1
         j += 1
